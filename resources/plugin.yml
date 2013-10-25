@@ -1,0 +1,7 @@
+name: PumpkinChallenge
+main: us.corenetwork.pumpkinchallenge.PumpkinsPlugin
+version: 1.0
+author: matejdro
+commands:
+    pumpkin:
+        description: Display pumpkin count   

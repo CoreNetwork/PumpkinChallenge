@@ -35,16 +35,16 @@ public class PumpkinsListener implements Listener {
 			{
 				Material pumpkinType = helmet.getType();
 				equipment.setHelmet(null);
-								
-				double baseChance = 0.085;
-				
+
+				double baseChance = Settings.getDouble(Setting.DROP_CHANCE_BASE);
+
 				EntityDamageEvent lastDamage = event.getEntity().getLastDamageCause();
 				if (lastDamage != null && lastDamage instanceof EntityDamageByEntityEvent)
 				{
 					EntityDamageByEntityEvent event2 = (EntityDamageByEntityEvent) lastDamage;
-					
+
 					Player killer = null;
-					
+
 					Entity damager = event2.getDamager();
 					if (damager instanceof Player)
 					{
@@ -58,17 +58,21 @@ public class PumpkinsListener implements Listener {
 							return;
 						}
 					}
-					
+
 					if (killer != null)
 					{
 						ItemStack hand = killer.getItemInHand();
 						if (hand != null)
 						{
 							int lootingLevel = hand.getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
-							baseChance += lootingLevel;
+							if (lootingLevel > 0)
+							{
+								double multiplier = Settings.getDouble(Setting.DROP_CHANCE_FORTUNE_MULTIPLIER);
+								baseChance += lootingLevel * multiplier;
+							}
 						}
 					}
-					
+
 					if (PumpkinsPlugin.random.nextDouble() < baseChance && EventManager.canDrop())
 					{
 						ItemStack drop = new ItemStack(pumpkinType, 1);
@@ -79,15 +83,15 @@ public class PumpkinsListener implements Listener {
 				{
 					return;
 				}
-				
-				
+
+
 				return;
 			}
 
-			
+
 		}
 	}
-	
+
 	@EventHandler(ignoreCancelled = true)
 	public void onEntityCombust(EntityCombustEvent event)
 	{
@@ -107,16 +111,15 @@ public class PumpkinsListener implements Listener {
 	public void onCreatureSpawn(CreatureSpawnEvent event)
 	{
 		if (isMobAffected(event.getEntityType()) && EventManager.isActive())
-		{			
-			if (PumpkinsPlugin.random.nextDouble() < Settings.getDouble(Setting.HELMET_CHANCE_LANTERN))
-			{
-				event.getEntity().getEquipment().setHelmet(new ItemStack(Material.JACK_O_LANTERN, 1));
-			}
-			else
+		{	
+			if (PumpkinsPlugin.random.nextDouble() < Settings.getDouble(Setting.HELMET_CHANCE_PUMPKIN))
 			{
 				event.getEntity().getEquipment().setHelmet(new ItemStack(Material.PUMPKIN, 1));
 			}
-			
+			else if (PumpkinsPlugin.random.nextDouble() < Settings.getDouble(Setting.HELMET_CHANCE_LANTERN))
+			{
+				event.getEntity().getEquipment().setHelmet(new ItemStack(Material.JACK_O_LANTERN, 1));
+			}
 		}
 	}
 

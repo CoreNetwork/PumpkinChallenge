@@ -1,14 +1,29 @@
 package us.corenetwork.pumpkinchallenge;
 
-import us.corenetwork.pumpkinchallenge.IO;
-import us.corenetwork.pumpkinchallenge.PumpkinsPlugin;
-import us.corenetwork.pumpkinchallenge.Setting;
-import us.corenetwork.pumpkinchallenge.Settings;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class EventManager {
+	private static final SimpleDateFormat startTimeReader;
+	static
+	{
+		startTimeReader = new SimpleDateFormat("MMM dd", new Locale("En-US"));
+		startTimeReader.setTimeZone(TimeZone.getDefault());
+	}
+	
+	public static int startingTime;
+	
 	public static int totalDrops = 0;
 	public static int drops = 0;
 	public static int currentCountingHour = 0;
+	
+	static
+	{
+	}
 	
 	public static boolean canDrop()
 	{		
@@ -39,9 +54,8 @@ public class EventManager {
 	public static int getCurrentHour()
 	{
 		long curTime = System.currentTimeMillis() / 1000;		
-		int startTime = Settings.getInt(Setting.STARTING_TIME);
 
-		int diff = (int) (curTime - startTime);
+		int diff = (int) (curTime - startingTime);
 		return diff / 3600;
 	}
 	
@@ -49,14 +63,38 @@ public class EventManager {
 	{
 		long curTime = System.currentTimeMillis() / 1000;
 		
-		int startTime = Settings.getInt(Setting.STARTING_TIME);
-		int endingTime = startTime + Settings.getInt(Setting.EVENT_DURATION);
+		int endingTime = startingTime + Settings.getInt(Setting.EVENT_DURATION);
 		
-		return curTime > startTime && curTime < endingTime;
+		return curTime > startingTime && curTime < endingTime;
+	}
+	
+	public static int getStartingTime()
+	{
+		String timeString = Settings.getString(Setting.STARTING_DATE);
+		int startingTime = -1;
+		
+		try
+		{
+			Date date = startTimeReader.parse(timeString);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			calendar.set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR));
+			
+			startingTime = (int) (calendar.getTimeInMillis() / 1000);
+			System.out.println(startingTime);
+		}
+		catch (ParseException e)
+		{
+			PumpkinsPlugin.log.severe("Invalid date formatting! Start date should be in format \"<Month> <Day>\" !");
+		}
+
+		
+		return startingTime;
 	}
 	
 	public static void init()
 	{
+		startingTime = getStartingTime();
 		totalDrops = IO.storage.getInt("totalDrops", 0);
 		drops = IO.storage.getInt("drops", 0);
 		currentCountingHour = IO.storage.getInt("currentCountingHour", 0);

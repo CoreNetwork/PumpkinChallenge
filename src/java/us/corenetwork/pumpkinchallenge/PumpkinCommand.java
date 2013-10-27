@@ -13,7 +13,6 @@ public class PumpkinCommand {
 		
 		EventManager.tryAdvanceHour();
 		
-		// 	MESSAGE_PUMPKINS("Messages.Pumpkins", "This hour: <HourCollected>/<HourlyCap>. Total: <TotalCollected>/<TotalCap>"),
 		String message = Settings.getString(Setting.MESSAGE_PUMPKINS);
 		message = message.replace("<HourCollected>", Integer.toString(EventManager.drops));
 		message = message.replace("<TotalCollected>", Integer.toString(EventManager.drops + EventManager.totalDrops));

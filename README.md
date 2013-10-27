@@ -74,7 +74,7 @@ StartingTime: Oct 31 00:00
 EventDurationHours: 24
 ```
 
-Time management. Change it to current date if you want to test the plugin.
+Time management. Change it to current date if you want to test the plugin. Remember that on October 31st undead spawn with pumpkins normally. Keeping this setting default will keep Minecraft vanilla.
 
 ```
 Messages:
@@ -82,7 +82,7 @@ Messages:
   NotActive: Event is not active.
 ```
 
-Messages appearing when players execute the `/pumpkin` command.
+Messages appearing when players execute the `/pumpkin` command. You can use [color codes](http://www.minecraftforum.net/topic/1485009-bukkit-colour-codes/) (`&c`, `&a`, etc).
 
 ## Known bugs
 

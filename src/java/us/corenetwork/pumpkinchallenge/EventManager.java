@@ -20,11 +20,7 @@ public class EventManager {
 	public static int totalDrops = 0;
 	public static int drops = 0;
 	public static int currentCountingHour = 0;
-	
-	static
-	{
-	}
-	
+		
 	public static boolean canDrop()
 	{		
 		tryAdvanceHour();

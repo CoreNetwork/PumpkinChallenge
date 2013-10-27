@@ -28,7 +28,7 @@ public class PumpkinsListener implements Listener {
 	public void onEntityDeath(EntityDeathEvent event)
 	{
 		if (isMobAffected(event.getEntityType()) && EventManager.isActive())
-		{
+		{			
 			EntityEquipment equipment = ((LivingEntity) event.getEntity()).getEquipment();
 			ItemStack helmet = equipment.getHelmet();
 			if (helmet != null && (helmet.getType() == Material.PUMPKIN || helmet.getType() == Material.JACK_O_LANTERN))
@@ -97,6 +97,8 @@ public class PumpkinsListener implements Listener {
 	{
 		if (event.getEntity() instanceof LivingEntity && isMobAffected(event.getEntityType()) && EventManager.isActive())
 		{
+			((LivingEntity) event.getEntity()).setCanPickupItems(false);
+
 			EntityEquipment equipment = ((LivingEntity) event.getEntity()).getEquipment();
 			ItemStack helmet = equipment.getHelmet();
 			if (helmet != null && (helmet.getType() == Material.PUMPKIN || helmet.getType() == Material.JACK_O_LANTERN))

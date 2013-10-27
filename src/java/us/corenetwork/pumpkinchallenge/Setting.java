@@ -10,7 +10,7 @@ public enum Setting {
 	HELMET_CHANCE_LANTERN("HelmetChance.Lantern", 0.2),
 	
 	DROP_CHANCE_BASE("DropChance.Base", 0.085),
-	DROP_CHANCE_FORTUNE_MULTIPLIER("DropChance.FortuneMultiplier", 1),
+	DROP_CHANCE_LOOTING_MULTIPLIER("DropChance.LootingEnchantMultiplier", 1),
 	
 	CAP_PER_HOUR("CapPerHour", 30),
 	STARTING_DATE("StartingDate", "Oct 27"),

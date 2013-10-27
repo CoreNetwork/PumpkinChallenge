@@ -67,7 +67,7 @@ public class PumpkinsListener implements Listener {
 							int lootingLevel = hand.getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
 							if (lootingLevel > 0)
 							{
-								double multiplier = Settings.getDouble(Setting.DROP_CHANCE_FORTUNE_MULTIPLIER);
+								double multiplier = Settings.getDouble(Setting.DROP_CHANCE_LOOTING_MULTIPLIER);
 								baseChance += lootingLevel * multiplier;
 							}
 						}

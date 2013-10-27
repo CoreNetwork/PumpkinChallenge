@@ -11,8 +11,8 @@ public class EventManager {
 	private static final SimpleDateFormat startTimeReader;
 	static
 	{
-		startTimeReader = new SimpleDateFormat("MMM dd", new Locale("En-US"));
-		startTimeReader.setTimeZone(TimeZone.getDefault());
+		startTimeReader = new SimpleDateFormat("MMM dd HH:00", new Locale("En-US"));
+		startTimeReader.setTimeZone(TimeZone.getTimeZone("UTC"));
 	}
 	
 	public static int startingTime;
@@ -59,14 +59,14 @@ public class EventManager {
 	{
 		long curTime = System.currentTimeMillis() / 1000;
 		
-		int endingTime = startingTime + Settings.getInt(Setting.EVENT_DURATION);
+		int endingTime = startingTime + Settings.getInt(Setting.EVENT_DURATION) * 3600;
 		
 		return curTime > startingTime && curTime < endingTime;
 	}
 	
 	public static int getStartingTime()
 	{
-		String timeString = Settings.getString(Setting.STARTING_DATE);
+		String timeString = Settings.getString(Setting.STARTING_TIME);
 		int startingTime = -1;
 		
 		try
@@ -77,11 +77,10 @@ public class EventManager {
 			calendar.set(Calendar.YEAR, Calendar.getInstance().get(Calendar.YEAR));
 			
 			startingTime = (int) (calendar.getTimeInMillis() / 1000);
-			System.out.println(startingTime);
 		}
 		catch (ParseException e)
 		{
-			PumpkinsPlugin.log.severe("Invalid date formatting! Start date should be in format \"<Month> <Day>\" !");
+			PumpkinsPlugin.log.severe("Invalid date formatting! Start date should be in format \"<Month> <Day> <Hour>:00\" !");
 		}
 
 		
@@ -98,6 +97,14 @@ public class EventManager {
 		if (!isActive())
 		{
 			PumpkinsPlugin.log.warning("[PumpkinChallenge] Event is not running at the moment!");
+		}
+		else
+		{
+			int endingTime = startingTime + Settings.getInt(Setting.EVENT_DURATION) * 3600;
+			double hoursDiff = endingTime - (System.currentTimeMillis() / 1000);
+			hoursDiff /= 3600.0;			
+			
+			PumpkinsPlugin.log.info("Event will end in " + Math.round(hoursDiff * 10.0) / 10.0 + " hours!");
 		}
 	}
 	

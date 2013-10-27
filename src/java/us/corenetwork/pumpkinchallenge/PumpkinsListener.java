@@ -68,7 +68,7 @@ public class PumpkinsListener implements Listener {
 							if (lootingLevel > 0)
 							{
 								double multiplier = Settings.getDouble(Setting.DROP_CHANCE_LOOTING_MULTIPLIER);
-								baseChance += lootingLevel * multiplier;
+								baseChance += lootingLevel * multiplier * 0.01;
 							}
 						}
 					}

@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 
 public enum Setting {		
-	AFFECTED_MOBS("AffectedMobs", Arrays.asList(new String[] { "ZOMBIE", "SKELETON"})),
+	AFFECTED_MOBS("AffectedMobs", Arrays.asList(new String[] { "ZOMBIE", "SKELETON", "PIGZOMBIE"})),
 	
 	HELMET_CHANCE_PUMPKIN("HelmetChance.Pumpkin", 0.8),
 	HELMET_CHANCE_LANTERN("HelmetChance.Lantern", 0.2),
@@ -13,10 +13,10 @@ public enum Setting {
 	DROP_CHANCE_LOOTING_MULTIPLIER("DropChance.LootingEnchantMultiplier", 1),
 	
 	CAP_PER_HOUR("CapPerHour", 30),
-	STARTING_TIME("StartingTime", "Oct 26 00:00"),
+	STARTING_TIME("StartingTime", "Oct 30 00:00"),
 	EVENT_DURATION("EventDurationHours", 24),
 	
-	MESSAGE_PUMPKINS("Messages.Pumpkins", "This hour: <HourCollected>/30. Total: <TotalCollected>/720"),
+	MESSAGE_PUMPKINS("Messages.Pumpkins", "This hour: <HourCollected>/<HourlyCap>. Total: <TotalCollected>/<TotalCap>"),
 	MESSAGE_NOT_ACTIVE("Messages.NotActive", "Event is not active.");
 	
 	private String name;

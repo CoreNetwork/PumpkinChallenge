@@ -13,7 +13,7 @@ public enum Setting {
 	DROP_CHANCE_LOOTING_MULTIPLIER("DropChance.LootingEnchantMultiplier", 1),
 	
 	CAP_PER_HOUR("CapPerHour", 30),
-	STARTING_TIME("StartingTime", "Oct 30 00:00"),
+	STARTING_TIME("StartingTime", "Oct 31 00:00"),
 	EVENT_DURATION("EventDurationHours", 24),
 	
 	MESSAGE_PUMPKINS("Messages.Pumpkins", "This hour: <HourCollected>/<HourlyCap>. Total: <TotalCollected>/<TotalCap>"),

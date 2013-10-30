@@ -12,7 +12,7 @@ public class EventManager {
 	static
 	{
 		startTimeReader = new SimpleDateFormat("MMM dd HH:00", new Locale("En-US"));
-		startTimeReader.setTimeZone(TimeZone.getTimeZone("UTC"));
+		startTimeReader.setTimeZone(TimeZone.getDefault());
 	}
 	
 	public static int startingTime;

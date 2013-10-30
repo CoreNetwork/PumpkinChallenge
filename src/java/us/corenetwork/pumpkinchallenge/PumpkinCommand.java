@@ -21,7 +21,7 @@ public class PumpkinCommand {
 		int duration = Settings.getInt(Setting.EVENT_DURATION);
 		
 		message = message.replace("<HourlyCap>", Integer.toString(hourlyCap));
-		message = message.replace("<TotalCap>", Integer.toString(duration));
+		message = message.replace("<TotalCap>", Integer.toString(duration * hourlyCap));
 
 		Util.Message(message, sender);
 	}

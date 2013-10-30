@@ -114,15 +114,27 @@ public class PumpkinsListener implements Listener {
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
 	public void onCreatureSpawn(CreatureSpawnEvent event)
 	{
-		if (isMobAffected(event.getEntityType()) && EventManager.isActive())
+		if (isMobAffected(event.getEntityType()))
 		{	
-			if (PumpkinsPlugin.random.nextDouble() < Settings.getDouble(Setting.HELMET_CHANCE_PUMPKIN))
+			if (EventManager.isActive())
 			{
-				event.getEntity().getEquipment().setHelmet(new ItemStack(Material.PUMPKIN, 1));
+				if (PumpkinsPlugin.random.nextDouble() < Settings.getDouble(Setting.HELMET_CHANCE_PUMPKIN))
+				{
+					event.getEntity().getEquipment().setHelmet(new ItemStack(Material.PUMPKIN, 1));
+				}
+				else if (PumpkinsPlugin.random.nextDouble() < Settings.getDouble(Setting.HELMET_CHANCE_LANTERN))
+				{
+					event.getEntity().getEquipment().setHelmet(new ItemStack(Material.JACK_O_LANTERN, 1));
+				}
 			}
-			else if (PumpkinsPlugin.random.nextDouble() < Settings.getDouble(Setting.HELMET_CHANCE_LANTERN))
+			else
 			{
-				event.getEntity().getEquipment().setHelmet(new ItemStack(Material.JACK_O_LANTERN, 1));
+				EntityEquipment equipment = event.getEntity().getEquipment();
+				ItemStack helmet = equipment.getHelmet();
+				if (helmet != null && (helmet.getType() == Material.PUMPKIN || helmet.getType() == Material.JACK_O_LANTERN))
+				{
+					equipment.setHelmet(null);
+				}
 			}
 		}
 	}

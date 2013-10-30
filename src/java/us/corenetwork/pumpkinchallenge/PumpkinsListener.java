@@ -27,7 +27,7 @@ public class PumpkinsListener implements Listener {
 	@EventHandler(ignoreCancelled = true)
 	public void onEntityDeath(EntityDeathEvent event)
 	{
-		if (isMobAffected(event.getEntityType()) && EventManager.isActive())
+		if (isMobAffected(event.getEntityType()))
 		{			
 			EntityEquipment equipment = ((LivingEntity) event.getEntity()).getEquipment();
 			ItemStack helmet = equipment.getHelmet();
@@ -36,54 +36,56 @@ public class PumpkinsListener implements Listener {
 				Material pumpkinType = helmet.getType();
 				equipment.setHelmet(null);
 
-				double baseChance = Settings.getDouble(Setting.DROP_CHANCE_BASE);
-
-				EntityDamageEvent lastDamage = event.getEntity().getLastDamageCause();
-				if (lastDamage != null && lastDamage instanceof EntityDamageByEntityEvent)
+				if (EventManager.isActive())
 				{
-					EntityDamageByEntityEvent event2 = (EntityDamageByEntityEvent) lastDamage;
+					double baseChance = Settings.getDouble(Setting.DROP_CHANCE_BASE);
 
-					Player killer = null;
+					EntityDamageEvent lastDamage = event.getEntity().getLastDamageCause();
+					if (lastDamage != null && lastDamage instanceof EntityDamageByEntityEvent)
+					{
+						EntityDamageByEntityEvent event2 = (EntityDamageByEntityEvent) lastDamage;
 
-					Entity damager = event2.getDamager();
-					if (damager instanceof Player)
-					{
-						killer = (Player) damager;
-					}
-					else if (damager instanceof Projectile)
-					{
-						Projectile projectile = (Projectile) damager;
-						if (!(projectile.getShooter() instanceof Player))
+						Player killer = null;
+
+						Entity damager = event2.getDamager();
+						if (damager instanceof Player)
 						{
-							return;
+							killer = (Player) damager;
 						}
-					}
-
-					if (killer != null)
-					{
-						ItemStack hand = killer.getItemInHand();
-						if (hand != null)
+						else if (damager instanceof Projectile)
 						{
-							int lootingLevel = hand.getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
-							if (lootingLevel > 0)
+							Projectile projectile = (Projectile) damager;
+							if (!(projectile.getShooter() instanceof Player))
 							{
-								double multiplier = Settings.getDouble(Setting.DROP_CHANCE_LOOTING_MULTIPLIER);
-								baseChance += lootingLevel * multiplier * 0.01;
+								return;
 							}
 						}
-					}
 
-					if (PumpkinsPlugin.random.nextDouble() < baseChance && EventManager.canDrop())
+						if (killer != null)
+						{
+							ItemStack hand = killer.getItemInHand();
+							if (hand != null)
+							{
+								int lootingLevel = hand.getEnchantmentLevel(Enchantment.LOOT_BONUS_MOBS);
+								if (lootingLevel > 0)
+								{
+									double multiplier = Settings.getDouble(Setting.DROP_CHANCE_LOOTING_MULTIPLIER);
+									baseChance += lootingLevel * multiplier * 0.01;
+								}
+							}
+						}
+
+						if (PumpkinsPlugin.random.nextDouble() < baseChance && EventManager.canDrop())
+						{
+							ItemStack drop = new ItemStack(pumpkinType, 1);
+							event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), drop);
+						}
+					}
+					else
 					{
-						ItemStack drop = new ItemStack(pumpkinType, 1);
-						event.getEntity().getWorld().dropItemNaturally(event.getEntity().getLocation(), drop);
+						return;
 					}
 				}
-				else
-				{
-					return;
-				}
-
 
 				return;
 			}

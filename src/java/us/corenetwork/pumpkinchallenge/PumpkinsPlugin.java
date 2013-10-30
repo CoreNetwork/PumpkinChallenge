@@ -39,6 +39,15 @@ public class PumpkinsPlugin extends JavaPlugin {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args) {
+		if (command.getName().equals("pumpkinreload"))
+		{
+			if (sender.hasPermission("pumpkins.reload"))
+			{
+				IO.LoadSettings();
+				sender.sendMessage("Pumpkins config reloaded.");
+			}
+		}
+		else
 		PumpkinCommand.run(sender);
 		return true;
 	}

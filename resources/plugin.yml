@@ -5,3 +5,5 @@ author: matejdro
 commands:
     pumpkin:
         description: Display pumpkin count   
+    pumpkinreload:
+        description: Reload plugin configuration

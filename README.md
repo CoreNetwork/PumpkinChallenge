@@ -46,14 +46,12 @@ AffectedMobs:
 Valid mob names. Please notice that not all mobs can wear items/blocks. The list mimics vanilla Halloween in Minecraft.
 
 ``` yaml
-ExtraHelmetChance:
-  Pumpkin: 0.0
-  Lantern: 0.0
+HelmetChance:
+  Pumpkin: 0.225
+  Lantern: 0.025
 ```
 
-**Extra** chance that a pumpkin or Jack o’Lantern will spawn on mobs. Please don’t change this if you don’t want more pumpkins spawning on mobs on October 31st. 
-
-If you’re organizing the event on other date, edit it to be something else than `0.0` (default values are `0.25` and `0.025`).
+Chance that a pumpkin or Jack o’Lantern will spawn on mobs.
 
 ``` yaml
 DropChance:
@@ -62,6 +60,8 @@ DropChance:
 ```
 
 Chance for a pumpkin to drop with additional bonus when using Looting. You can change it to make it easier or harder for a pumpkin to drop (and reward Looting enchantment more than usual).
+
+Formula for drop is: Base + (LOOTING_LEVEL) * LootingEnchantMultiplier, where LOOTING_LEVEL is level of looting player has on his sword.
 
 ``` yaml
 CapPerHour: 30

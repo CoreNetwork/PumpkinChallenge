@@ -6,8 +6,8 @@ import java.util.Arrays;
 public enum Setting {		
 	AFFECTED_MOBS("AffectedMobs", Arrays.asList(new String[] { "ZOMBIE", "SKELETON", "PIGZOMBIE"})),
 	
-	HELMET_CHANCE_PUMPKIN("ExtraHelmetChance.Pumpkin", 0),
-	HELMET_CHANCE_LANTERN("ExtraHelmetChance.Lantern", 0),
+	HELMET_CHANCE_PUMPKIN("HelmetChance.Pumpkin", 0.225),
+	HELMET_CHANCE_LANTERN("HelmetChance.Lantern", 0.025),
 	
 	DROP_CHANCE_BASE("DropChance.Base", 0.085),
 	DROP_CHANCE_LOOTING_MULTIPLIER("DropChance.LootingEnchantMultiplier", 1),

@@ -116,24 +116,22 @@ public class PumpkinsListener implements Listener {
 	{
 		if (isMobAffected(event.getEntityType()))
 		{	
+			EntityEquipment equipment = event.getEntity().getEquipment();
+			ItemStack helmet = equipment.getHelmet();
+			if (helmet != null && (helmet.getType() == Material.PUMPKIN || helmet.getType() == Material.JACK_O_LANTERN))
+			{
+				equipment.setHelmet(null);
+			}
+			
 			if (EventManager.isActive())
 			{
 				if (PumpkinsPlugin.random.nextDouble() < Settings.getDouble(Setting.HELMET_CHANCE_PUMPKIN))
 				{
-					event.getEntity().getEquipment().setHelmet(new ItemStack(Material.PUMPKIN, 1));
+					equipment.setHelmet(new ItemStack(Material.PUMPKIN, 1));
 				}
 				else if (PumpkinsPlugin.random.nextDouble() < Settings.getDouble(Setting.HELMET_CHANCE_LANTERN))
 				{
-					event.getEntity().getEquipment().setHelmet(new ItemStack(Material.JACK_O_LANTERN, 1));
-				}
-			}
-			else
-			{
-				EntityEquipment equipment = event.getEntity().getEquipment();
-				ItemStack helmet = equipment.getHelmet();
-				if (helmet != null && (helmet.getType() == Material.PUMPKIN || helmet.getType() == Material.JACK_O_LANTERN))
-				{
-					equipment.setHelmet(null);
+					equipment.setHelmet(new ItemStack(Material.JACK_O_LANTERN, 1));
 				}
 			}
 		}
